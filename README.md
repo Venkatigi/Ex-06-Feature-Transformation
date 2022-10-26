@@ -90,7 +90,7 @@ plt.show()
 ```
 # OUPUT
 
-![1](images\1.JPG)
+![1](https://github.com/Venkatigi/Ex-06-Feature-Transformation/blob/main/images/1.JPG)
 ![](images\2.JPG)
 ![](images\3.JPG)
 ![](images\4.JPG)
