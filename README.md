@@ -27,67 +27,83 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import scipy.stats as stats
-df = pd.read_csv("/content/Data_to_Transform.csv")
-print(df)
+from sklearn.preprocessing import QuantileTransformer
+
+df=pd.read_csv("D:\ggg\clg\Documents\SEM 3\Data Science\Projects\Ex-06-Feature-Transformation/Data_to_Transform.csv")
 df.head()
-df.isnull().sum()
+
 df.info()
 df.describe()
-df1 = df.copy()
-sm.qqplot(df1.HighlyPositiveSkew,fit=True,line='45')
+df.isnull().sum()
+df.shape
+df.columns
+df.duplicated()
+
+sm.qqplot(df['Highly Positive Skew'],fit=True,line='45')
 plt.show()
-sm.qqplot(df1.HighlyNegativeSkew,fit=True,line='45')
+
+sm.qqplot(df['Highly Negative Skew'],fit=True,line='45')
 plt.show()
-sm.qqplot(df1.ModeratePositiveSkew,fit=True,line='45')
+
+sm.qqplot(df['Moderate Positive Skew'],fit=True,line='45')
 plt.show()
-sm.qqplot(df1.ModerateNegativeSkew,fit=True,line='45')
+
+sm.qqplot(df['Moderate Negative Skew'],fit=True,line='45')
 plt.show()
-df1['HighlyPositiveSkew'] = np.log(df1.HighlyPositiveSkew)
-sm.qqplot(df1.HighlyPositiveSkew,fit=True,line='45')
+
+df['Highly Positive Skew'] = np.log(df['Highly Positive Skew'])
+
+sm.qqplot(df['Highly Positive Skew'],fit=True,line='45')
 plt.show()
-df2 = df.copy()
-df2['HighlyPositiveSkew'] = 1/df2.HighlyPositiveSkew
-sm.qqplot(df2.HighlyPositiveSkew,fit=True,line='45')
+
+df['Moderate Positive Skew'] = np.log(df['Moderate Positive Skew'])
+
+sm.qqplot(df['Moderate Positive Skew'],fit=True,line='45')
 plt.show()
-df3 = df.copy()
-df3['HighlyPositiveSkew'] = df3.HighlyPositiveSkew**(1/1.2)
-sm.qqplot(df2.HighlyPositiveSkew,fit=True,line='45')
+
+df['Highly Positive Skew'] = 1/df['Highly Positive Skew']
+
+sm.qqplot(df['Highly Positive Skew'],fit=True,line='45')
 plt.show()
-df4 = df.copy()
-df4['ModeratePositiveSkew_1'],parameters =stats.yeojohnson(df4.ModeratePositiveSkew)
-sm.qqplot(df4.ModeratePositiveSkew_1,fit=True,line='45')
+
+df['Highly Positive Skew'] = df['Highly Positive Skew']**(1/1.2)
+
+sm.qqplot(df['Highly Positive Skew'],fit=True,line='45')
 plt.show()
-from sklearn.preprocessing import PowerTransformer 
-trans = PowerTransformer("yeo-johnson")
-df5 = df.copy()
-df5['ModerateNegativeSkew_1'] = pd.DataFrame(trans.fit_transform(df5[['ModerateNegativeSkew']]))
-sm.qqplot(df5['ModerateNegativeSkew_1'],line='45')
+
+df['Moderate Positive Skew_1'], parameters=stats.yeojohnson(df['Moderate Positive Skew'])
+
+sm.qqplot(df['Moderate Positive Skew_1'],fit=True,line='45')
 plt.show()
+
+from sklearn.preprocessing import PowerTransformer
+transformer=PowerTransformer("yeo-johnson")
+df['ModerateNegativeSkew_2']=pd.DataFrame(transformer.fit_transform(df[['Moderate Negative Skew']]))
+sm.qqplot(df['ModerateNegativeSkew_2'],fit=True,line='45')
+plt.show()
+
 from sklearn.preprocessing import QuantileTransformer
 qt = QuantileTransformer(output_distribution = 'normal')
-df5['ModerateNegativeSkew_2'] = pd.DataFrame(qt.fit_transform(df5[['ModerateNegativeSkew']]))
-sm.qqplot(df5['ModerateNegativeSkew_2'],line='45')
+df['ModerateNegativeSkew_2'] = pd.DataFrame(qt.fit_transform(df[['Moderate Negative Skew']]))
+sm.qqplot(df['ModerateNegativeSkew_2'],fit=True,line='45')
 plt.show()
-
 ```
 # OUPUT
-## Feature Transformation - Data_to_Transform.csv
-![Feature_Transformation](/images/img.png)
-![Feature_Transformation](/images/img2.png)
-![Feature_Transformation](/images/img3.png)
-![Feature_Transformation](/images/img4.png)
-![Feature_Transformation](/images/img5.png)
-## Log Transformation
-![Feature_Transformation](/images/img6.png)
-## Reciprocal Transformation
-![Feature_Transformation](/images/img7.png)
-## SquareRoot Transformation
-![Feature_Transformation](/images/img8.png)
-## Power Transformation 
-![Feature_Transformation](/images/img9.png)
-![Feature_Transformation](/images/img10.png)
-## Quantile Transformation
-![Feature_Transformation](/images/img11.png)
 
+![](images\1.JPG)
+![](images\2.JPG)
+![](images\3.JPG)
+![](images\4.JPG)
+![](images\5.JPG)
+![](images\6.JPG)
+![](images\7.JPG)
+
+![](images\8.JPG)
+![](images\9.JPG)
+![](images\10.JPG)
+![](images\11.JPG)
+![](images\12.JPG)
+![](images\13.JPG)
+![](images\14.JPG)
 # RESULT 
 Thus the Feature Transformation for the given datasets had been executed successfully
